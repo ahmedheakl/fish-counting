@@ -1,5 +1,4 @@
 import torch
-import cv2
 import numpy as np
 from PIL import Image
 from transformers import pipeline
@@ -121,40 +120,40 @@ class FishFeeding:
         return total_feed, times
 
 
-if __name__ == "__main__":
-    to_collect = 6
-    collected = []
-    video_path = "object_counting.mp4"
-    cap = cv2.VideoCapture(video_path)
+# if __name__ == "__main__":
+#     to_collect = 6
+#     collected = []
+#     video_path = "object_counting.mp4"
+#     cap = cv2.VideoCapture(video_path)
 
-    fish_feeding = FishFeeding()
-    fish_feeding.load_models()
+#     fish_feeding = FishFeeding()
+#     fish_feeding.load_models()
 
-    d = {"images": []}
+#     d = {"images": []}
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+#     while True:
+#         ret, frame = cap.read()
+#         if not ret:
+#             break
 
-        if len(collected) == to_collect:
-            total_feed, times = fish_feeding.final_fish_feed(collected)
-            print(f"Total feed: {total_feed}, Feed times: {times}")
-            collected = []
+#         if len(collected) == to_collect:
+#             total_feed, times = fish_feeding.final_fish_feed(collected)
+#             print(f"Total feed: {total_feed}, Feed times: {times}")
+#             collected = []
 
-            break
+#             break
         
-        collected.append(frame)
-        d["images"].append(frame.tolist())
+#         collected.append(frame)
+#         d["images"].append(frame.tolist())
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+#         if cv2.waitKey(1) & 0xFF == ord("q"):
+#             break
 
-    cap.release()
-    cv2.destroyAllWindows()
+#     cap.release()
+#     cv2.destroyAllWindows()
 
-    # save d to json file
-    import json
-    with open("data.json", "w") as f:
-        json.dump(d, f)
+#     # save d to json file
+#     import json
+#     with open("data.json", "w") as f:
+#         json.dump(d, f)
 
