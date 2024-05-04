@@ -29,7 +29,7 @@ class FishFeeding:
 
         results = self.fish_detection_model(frame)[0]
         if (results.keypoints == None):
-            return 0
+            raise ValueError("No fish detected in the image")
         keypoints = results.keypoints.xyn[0].detach().cpu().numpy()
         head = keypoints[0]
         back = keypoints[1]
@@ -96,7 +96,10 @@ class FishFeeding:
 
     def final_fish_feed(self, images: list):
         for image in images:
-            output = self.predict_fish_length(image)
+            try:
+                output = self.predict_fish_length(image)
+            except ValueError:
+                continue
             self.collected_lengths.append(output)
 
         average_weight = self.get_average_weight()
