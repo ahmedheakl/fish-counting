@@ -28,6 +28,8 @@ class FishFeeding:
         depth = np.array(depth).squeeze()
 
         results = self.fish_detection_model(frame)[0]
+        if (results.keypoints == None):
+            return 0
         keypoints = results.keypoints.xyn[0].detach().cpu().numpy()
         head = keypoints[0]
         back = keypoints[1]

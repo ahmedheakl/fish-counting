@@ -1,8 +1,16 @@
-FROM python:3.8-slim
+FROM pytorch/pytorch:latest
 
 WORKDIR /app
 
-# RUN apt-get update && apt-get install libgl1 -y && apt-get install libglib2.0-0 -y
+RUN pip install opencv-python==4.9.0.80
+
+RUN apt-get update
+
+RUN apt-get install libgl1-mesa-glx -y
+
+RUN apt-get install -y libglib2.0-0 -y
+
+
 
 COPY requirements.txt .
 

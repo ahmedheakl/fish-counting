@@ -2,3 +2,4 @@ pillow
 ultralytics
 transformers
 fastapi
+dill==0.3.8
